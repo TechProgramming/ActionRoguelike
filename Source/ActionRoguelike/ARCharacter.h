@@ -31,7 +31,22 @@ protected:
 
 	void MoveForward(float Value)
 	{
-		AddMovementInput(GetActorForwardVector(), Value);
+		FRotator ControlRot = GetControlRotation();
+		ControlRot.Pitch = 0.0f;
+		ControlRot.Roll = 0.0f;
+
+		AddMovementInput(ControlRot.Vector(), Value);
+	}
+
+	void MoveRight(float Value)
+	{
+		FRotator ControlRot = GetControlRotation();
+		ControlRot.Pitch = 0.0f;
+		ControlRot.Roll = 0.0f;
+
+		FVector RightVector = FRotationMatrix(ControlRot).GetScaledAxis(EAxis::Y);
+
+		AddMovementInput(RightVector, Value);
 	}
 
 public:	

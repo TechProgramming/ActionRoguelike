@@ -4,6 +4,7 @@
 #include "ARCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AARCharacter::AARCharacter()
@@ -16,6 +17,10 @@ AARCharacter::AARCharacter()
 
 	CameraComp->SetupAttachment(SpringArmComp);
 	SpringArmComp->SetupAttachment(RootComponent);
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	bUseControllerRotationYaw = false;
 }
 
 // Called when the game starts or when spawned
@@ -37,7 +42,9 @@ void AARCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis("moveForward", this, &AARCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("MoveForward", this, &AARCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AARCharacter::MoveRight);
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 }
 
