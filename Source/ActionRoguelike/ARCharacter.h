@@ -14,6 +14,10 @@ class ACTIONROGUELIKE_API AARCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(EditAnywhere);
+	TSubclassOf<AActor> ProjectileClass;
+
 public:
 	// Sets default values for this character's properties
 	AARCharacter();
@@ -29,25 +33,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void MoveForward(float Value)
-	{
-		FRotator ControlRot = GetControlRotation();
-		ControlRot.Pitch = 0.0f;
-		ControlRot.Roll = 0.0f;
+	void MoveForward(float Value);
 
-		AddMovementInput(ControlRot.Vector(), Value);
-	}
+	void MoveRight(float Value);
 
-	void MoveRight(float Value)
-	{
-		FRotator ControlRot = GetControlRotation();
-		ControlRot.Pitch = 0.0f;
-		ControlRot.Roll = 0.0f;
+	void PrimaryAttack();
 
-		FVector RightVector = FRotationMatrix(ControlRot).GetScaledAxis(EAxis::Y);
-
-		AddMovementInput(RightVector, Value);
-	}
 
 public:	
 	// Called every frame
